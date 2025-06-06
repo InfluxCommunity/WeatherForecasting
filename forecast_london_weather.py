@@ -1,5 +1,7 @@
 import pandas as pd
 from neuralprophet import NeuralProphet
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 
 def process_scheduled_call(influxdb3_local, call_time, args=None):
@@ -8,20 +10,20 @@ def process_scheduled_call(influxdb3_local, call_time, args=None):
     # Query full data from InfluxDB
     query = """
         SELECT time AS ds, temperature_c, precipitation_mm
-        FROM london_weather
+        FROM london_weather_24_25
         ORDER BY time
     """
     results = influxdb3_local.query(query)
     if not results:
-        influxdb3_local.warn("No data found in 'london_weather'")
+        influxdb3_local.warn("No data found in 'london_weather_24_25'")
         return
 
     df = pd.DataFrame(results)
     df["ds"] = pd.to_datetime(df["ds"])
 
     # Train on 3 months of data up to Jan 31, 2024
-    start = pd.Timestamp("2023-11-01 00:00:00")
-    cutoff = pd.Timestamp("2024-01-31 23:00:00")
+    start = pd.Timestamp("2024-06-06 00:00:00")
+    cutoff = pd.Timestamp("2025-06-06 12:15:00")
     df = df[(df["ds"] >= start) & (df["ds"] <= cutoff)]
 
     # Forecast horizon: 7 days (168 hours)
@@ -49,7 +51,7 @@ def process_scheduled_call(influxdb3_local, call_time, args=None):
         # Write forecast to InfluxDB
         for _, row in forecast_only.iterrows():
             ts_ns = int(pd.to_datetime(row["ds"]).timestamp() * 1e9)
-            line = LineBuilder("forecast_weather")
+            line = LineBuilder("forecast_weather_24_25")
             line.time_ns(ts_ns)
             line.string_field("forecast_time", str(row["ds"]))
             line.string_field("type", series_name)
