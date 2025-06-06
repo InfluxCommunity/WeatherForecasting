@@ -181,11 +181,12 @@ Arguments:
 ```shell
 influxdb3 create trigger \
   --trigger-spec "every:1m" \
-  --plugin-filename "forecast_london_weather.py" \
+  --plugin-filename "$(pwd)/forecast_london_weather.py" \
   --token 'YOUR_TOKEN_STRING' \
   --database my_awesome_db \
   london_weather_forecast
 ```
+Note, if you are not running influxdb3 in Docker then you must pass the full path to the Python script.
 
 2.3 Verify the Forecasted Data
 
