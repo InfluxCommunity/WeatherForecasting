@@ -96,7 +96,7 @@ Arguments:
 
 - `--node-id`: Identifier for your InfluxDB node.
 - `--object-store`: Type of object storage (e.g., memory, file, remote such as Amazon S3).
-- `--data-dir`: Location of the directory where file baed object storage will reside.
+- `--data-dir`: Location of the directory where file based object storage will reside.
 - `--plugin-dir`: Directory containing local Python plugin scripts. Omit this argument if using plugins directly from GitHub.
 
 **Example command**
@@ -118,9 +118,9 @@ export INFLUXDB3_AUTH_TOKEN=your-api-key-here
 ```
 
 > [!IMPORTANT]
-> Remember, tokens give full access to InfluxDB. It is recommended to secure your token string as it is not saved within the database thus can't be retreived if lost. You can save it as a local **INFLUXDB3_AUTH_TOKEN** enviornment variable or in a keystore.
+> Remember, tokens give full access to InfluxDB. It is recommended to secure your token string as it is not saved within the database thus can't be retrieved if lost. You can save it as a local **INFLUXDB3_AUTH_TOKEN** environment variable or in a keystore.
 
-4. Create Database & Verfify it using the cli. It can also be created automatically when line protocol data is first written to it.
+4. Create Database & Verify it using the cli. It can also be created automatically when line protocol data is first written to it.
 ```shell
 influxdb3 create database my_awesome_db --token $INFLUXDB3_AUTH_TOKEN
 influxdb3 show databases --token $INFLUXDB3_AUTH_TOKEN
@@ -128,7 +128,7 @@ influxdb3 show databases --token $INFLUXDB3_AUTH_TOKEN
 
 5. Collect the historical weather data
 
-  - Downalod as .cvs file containing one year of London weather data for the year 2024 containing temperature & precipitation values on hourly basis from [OpenMateo API](https://open-meteo.com/en/docs/historical-weather-api?hourly=temperature_2m,precipitation&start_date=2024-01-01&end_date=2024-12-31&timezone=Europe%2FLondon&latitude=51.5&longitude=0.12)
+  - Download as .cvs file containing one year of London weather data for the year 2024 containing temperature & precipitation values on hourly basis from [OpenMateo API](https://open-meteo.com/en/docs/historical-weather-api?hourly=temperature_2m,precipitation&start_date=2024-01-01&end_date=2024-12-31&timezone=Europe%2FLondon&latitude=51.5&longitude=0.12)
   - Clean up data and convert to LineProtocol format. [File](https://github.com/InfluxCommunity/WeatherForecasting/blob/main/london_weather_ns.lp)
     
 5. Write Weather data for 2024 for London using the CLI. We will download and convert the data to line protocol
@@ -153,11 +153,11 @@ influxdb3 query \
 
 ### Plugin & Triggers
 
-A plugin is a Python file containing a callback function with a specific signature that corresponds to the trigger type. The trigger defines and configures the plugin including providing any optional information using `--trigger-arguments` option. One or more trigger can be setup to run simultaneously either synchnorously (default behavior) or asynchnorously. Triggers can also be disabled or deleted.
+A plugin is a Python file containing a callback function with a specific signature that corresponds to the trigger type. The trigger defines and configures the plugin including providing any optional information using `--trigger-arguments` option. One or more trigger can be setup to run simultaneously either synchronously (default behavior) or asynchronously. Triggers can also be disabled or deleted.
 
 #### Install Python dependencies (optional)
 
-InfluxDB 3 provides a virtual enviornment for running python processing engine plugins. Those plugins are often dependent on python packages such as those from PyPy. They can be installed using influxdb3 cli for example `influxdb3 install package pandas --token YOUR_TOKEN_STRING'.
+InfluxDB 3 provides a virtual environment for running python processing engine plugins. Those plugins are often dependent on python packages such as those from PyPy. They can be installed using influxdb3 cli for example `influxdb3 install package pandas --token YOUR_TOKEN_STRING'.
 
 **Install Python Packages**
 ```sh
