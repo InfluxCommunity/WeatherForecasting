@@ -105,7 +105,7 @@ Arguments:
 
 - `--node-id`: Identifier for your InfluxDB node.
 - `--object-store`: Type of object storage (e.g., memory, file, remote such as Amazon S3).
-- `--data-dir`: Location of the directory where file baed object storage will reside.
+- `--data-dir`: Location of the directory where file based object storage will reside.
 - `--plugin-dir`: Directory containing local Python plugin scripts. Omit this argument if using plugins directly from GitHub.
 
 **Example command**
@@ -126,19 +126,25 @@ Most `influxdb3` commands require an authentication token. Create an admin token
 
 ```shell
 influxdb3 create token --admin
+export INFLUXDB3_AUTH_TOKEN=your-api-key-here
 ```
 
 > [!IMPORTANT]
-> Remember, tokens give full access to InfluxDB. It is recommended to secure your token string as it is not saved within the database thus can't be retreived if lost. You can save it as a local **INFLUXDB3_AUTH_TOKEN** enviornment variable or in a keystore.
+> Remember, tokens give full access to InfluxDB. It is recommended to secure your token string as it is not saved within the database thus can't be retrieved if lost. You can save it as a local **INFLUXDB3_AUTH_TOKEN** environment variable or in a keystore.
 
 4. Create Database & Verfify it using the cli. It can also be created automatically when line protocol data is first written to it.
 
 ```shell
-influxdb3 create database my_awesome_db --token "YOUR_TOKEN_STRING"
-influxdb3 show databases --token "YOUR_TOKEN_STRING"
+influxdb3 create database my_awesome_db --token $INFLUXDB3_AUTH_TOKEN
+influxdb3 show databases --token $INFLUXDB3_AUTH_TOKEN
 ```
 
 5. Collect the historical weather data
+
+  - Download as .cvs file containing one year of London weather data for the year 2024 containing temperature & precipitation values on hourly basis from [OpenMateo API](https://open-meteo.com/en/docs/historical-weather-api?hourly=temperature_2m,precipitation&start_date=2024-01-01&end_date=2024-12-31&timezone=Europe%2FLondon&latitude=51.5&longitude=0.12)
+  - Clean up data and convert to LineProtocol format. [File](https://github.com/InfluxCommunity/WeatherForecasting/blob/main/london_weather_ns.lp)
+    
+5. Write Weather data for 2024 for London using the CLI. We will download and convert the data to line protocol
 
    - The original workshop uses a pre-generated data file for 2024. To run the forecast for a more recent period, we will generate our own data.
    - The included `convert_lp.py` script will download one year of historical data for London from the [Open-Meteo API](https://open-meteo.com/en/docs) (from June 2024 to June 2025) and convert it to InfluxDB Line Protocol format.
@@ -159,7 +165,7 @@ influxdb3 write --database my_awesome_db --file london_weather_2024_2025.lp --to
 ```shell
 influxdb3 query \
   --database my_awesome_db \
-  --token 'YOUR_TOKEN_STRING' \
+  --token $INFLUXDB3_AUTH_TOKEN \
   "SHOW tables"
 ```
 
@@ -172,16 +178,16 @@ influxdb3 query \
 
 ### Plugin & Triggers
 
-A plugin is a Python file containing a callback function with a specific signature that corresponds to the trigger type. The trigger defines and configures the plugin including providing any optional information using `--trigger-arguments` option. One or more trigger can be setup to run simultaneously either synchnorously (default behavior) or asynchnorously. Triggers can also be disabled or deleted.
+A plugin is a Python file containing a callback function with a specific signature that corresponds to the trigger type. The trigger defines and configures the plugin including providing any optional information using `--trigger-arguments` option. One or more trigger can be setup to run simultaneously either synchronously (default behavior) or asynchronously. Triggers can also be disabled or deleted.
 
 #### Install Python dependencies (optional)
 
-InfluxDB 3 provides a virtual enviornment for running python processing engine plugins. Those plugins are often dependent on python packages such as those from PyPy. They can be installed using influxdb3 cli for example `influxdb3 install package pandas --token YOUR_TOKEN_STRING'.
+InfluxDB 3 provides a virtual environment for running python processing engine plugins. Those plugins are often dependent on python packages such as those from PyPy. They can be installed using influxdb3 cli for example `influxdb3 install package pandas --token YOUR_TOKEN_STRING'.
 
 **Install Python Packages**
 
 ```sh
-influxdb3 install package pandas neuralprophet plotly matplotlib --token 'YOUR_TOKEN_STRING'
+influxdb3 install package pandas neuralprophet plotly matplotlib --token $INFLUXDB3_AUTH_TOKEN
 ```
 
 #### Forecast Weather
@@ -203,8 +209,8 @@ Arguments:
 ```shell
 influxdb3 create trigger \
   --trigger-spec "every:1m" \
-  --plugin-filename "forecast_london_weather.py" \
-  --token 'YOUR_TOKEN_STRING' \
+  --plugin-filename "$(pwd)/forecast_london_weather.py" \
+  --token $INFLUXDB3_AUTH_TOKEN \
   --database my_awesome_db \
   london_weather_forecast
 ```
