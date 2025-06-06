@@ -152,7 +152,7 @@ influxdb3 show databases --token $INFLUXDB3_AUTH_TOKEN
 5. Write Weather data for 2024 for London using the CLI. We will download and convert the data to line protocol
 
    - The original workshop uses a pre-generated data file for 2024. To run the forecast for a more recent period, we will generate our own data.
-   - The included `convert_lp.py` script will download one year of historical data for London from the [Open-Meteo API](https://open-meteo.com/en/docs) (from June 2024 to June 2025) and convert it to InfluxDB Line Protocol format.
+   - The included `convert_lp.py` script will download one year of historical data for London from the [Open Mateo API](https://open-meteo.com/en/docs) (from June 2024 to June 2025) and convert it to InfluxDB [Line Protocol format](https://docs.influxdata.com/influxdb3/core/reference/line-protocol).
    - Run the script to generate the data:
      ```shell
      python3 convert_lp.py
