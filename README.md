@@ -127,7 +127,7 @@ influxdb3 show databases --token "YOUR_TOKEN_STRING"
 
 5. Collect the historical weather data
 
-  - Downalod as .cvs file containing one year of London weather data for the year 2024 containing temperature & precipitation values on hourly basis from [OpenMateo API](https://open-meteo.com/en/docs/historical-weather-api?hourly=temperature_2m,precipitation&start_date=2024-01-01&end_date=2024-12-31&timezone=Europe%2FLondon&latitude=51.5&longitude=0.12)
+  - Downalod as .cvs file containing one year of London weather data for the year 2024 containing temperature & precipitation values on hourly basis from [OpenMeteo API](https://open-meteo.com/en/docs/historical-weather-api?hourly=temperature_2m,precipitation&start_date=2024-01-01&end_date=2024-12-31&timezone=Europe%2FLondon&latitude=51.5&longitude=0.12)
   - Clean up data and convert to LineProtocol format. [File](https://github.com/InfluxCommunity/WeatherForecasting/blob/main/london_weather_ns.lp)
     
 5. Write Weather data for 2024 for London using the CLI. We will download and convert the data to line protocol
