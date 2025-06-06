@@ -119,7 +119,7 @@ influxdb3 serve \
   --plugin-dir ~/influxdb3-plugins
 ```
 
-Upon running hte command, InfluxDB 3 should start on **localhost:8181** (default) and start printing logs in the terminal window without any error.
+Upon running the command, InfluxDB 3 should start on **localhost:8181** (default) and start printing logs in the terminal window without any error.
 
 3. Create a Token using the CLI & Save it
 
@@ -222,7 +222,7 @@ Enable the trigger:
 influxdb3 enable trigger --database my_awesome_db london_weather_forecast --token $TOKEN
 ```
 
-2.3 Verify the Forecasted Data
+2.3 Verify the Forecasted Data (wait 1 minute as we made the script to run at 1 min interval for demo purpose)
 
 Run the following command to query forecasted data written to the new table at given interval.
 
