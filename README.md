@@ -129,9 +129,9 @@ Token Creation
 ```shell
 influxdb3 create token --admin
 ```
-Token saved locally as Enviornment Variable (for Windows OS, you may have to save enviornment variable differently)
+Save the above generated token string locally as Enviornment Variable (for Windows OS, you may have to save enviornment variable differently)
 ```sh
-export INFLUXDB3_AUTH_TOKEN=YOUR_ADMIN_TOJ
+export INFLUXDB3_AUTH_TOKEN=YOUR_TOKEN_STRING
 ```
 
 > [!IMPORTANT]
