@@ -114,6 +114,7 @@ Upon running hte command, InfluxDB 3 should start on **localhost:8181** (default
 Most `influxdb3` commands require an authentication token. Create an admin token using the following command and save it somewhere securely:
 ```shell
 influxdb3 create token --admin
+export INFLUXDB3_AUTH_TOKEN=your-api-key-here
 ```
 
 > [!IMPORTANT]
@@ -121,8 +122,8 @@ influxdb3 create token --admin
 
 4. Create Database & Verfify it using the cli. It can also be created automatically when line protocol data is first written to it.
 ```shell
-influxdb3 create database my_awesome_db --token "YOUR_TOKEN_STRING"
-influxdb3 show databases --token "YOUR_TOKEN_STRING"
+influxdb3 create database my_awesome_db --token $INFLUXDB3_AUTH_TOKEN
+influxdb3 show databases --token $INFLUXDB3_AUTH_TOKEN
 ```
 
 5. Collect the historical weather data
@@ -139,14 +140,14 @@ influxdb3 write --database my_awesome_db --file london_weather_ns.lp --token 'YO
 ```shell
 influxdb3 query \
   --database my_awesome_db \
-  --token 'YOUR_TOKEN_STRING' \
+  --token $INFLUXDB3_AUTH_TOKEN \
   "SHOW tables"
 ```
 
 ```shell
 influxdb3 query \
   --database my_awesome_db \
-  --token 'YOUR_TOKEN_STRING' \
+  --token $INFLUXDB3_AUTH_TOKEN \
   "SELECT * FROM london_weather"
 ``` 
 
@@ -160,7 +161,7 @@ InfluxDB 3 provides a virtual enviornment for running python processing engine p
 
 **Install Python Packages**
 ```sh
-influxdb3 install package pandas neuralprophet plotly matplotlib --token 'YOUR_TOKEN_STRING'
+influxdb3 install package pandas neuralprophet plotly matplotlib --token $INFLUXDB3_AUTH_TOKEN
 ```
 
 #### Forecast Weather
@@ -181,8 +182,8 @@ Arguments:
 ```shell
 influxdb3 create trigger \
   --trigger-spec "every:1m" \
-  --plugin-filename "forecast_london_weather.py" \
-  --token 'YOUR_TOKEN_STRING' \
+  --plugin-filename "$(pwd)/forecast_london_weather.py" \
+  --token $INFLUXDB3_AUTH_TOKEN \
   --database my_awesome_db \
   london_weather_forecast
 ```
@@ -194,7 +195,7 @@ Run the following command to query forecasted data written to the new table at g
 ```shell
 influxdb3 query \
   --database my_awesome_db \
-  --token 'YOUR_TOKEN_STRING' \
+  --token $INFLUXDB3_AUTH_TOKEN \
   "SELECT * FROM forecast_weather"
 ```
 
