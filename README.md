@@ -250,7 +250,7 @@ kill -9 <PID>
 
 ### Using Community created Plugin
 
-You can directly use plugins from the official [InfluxData Plugins GitHub repository](https://github.com/influxdata/influxdb3_plugins) or other public repositories using the gh: prefix in the `--plugin-filename argument`
+You can directly use other ML plugins from the official [InfluxData Plugins GitHub repository](https://github.com/Anaisdg/influxdb3_plugins/tree/add-fbprophet-plugins/influxdata/Anaisdg/fbprophet) the gh: prefix in the `--plugin-filename argument`
 
 Example - using sample system_metrics schedule plugin
 
