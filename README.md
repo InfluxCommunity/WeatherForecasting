@@ -4,6 +4,8 @@ Workshop content for forecasting weather data including anomaly detection using 
 
 **Slides**: https://www.slideshare.net/slideshow/timeseries-machine-learning-pydata-london-2025/280261049
 
+<img src="graphic.jpeg" width="200">
+
 ### Pre-Requisites:
 
 1. **Python**: Make sure you have Python version 3.x on your system.
