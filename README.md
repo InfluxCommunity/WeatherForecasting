@@ -1,6 +1,8 @@
 # Weather Forecasting Workshop
 Workshop content for forecasting weather data including anomaly detection using InfluxDB 3 Core's Python Processing Engine.
 
+**Slides**: https://www.slideshare.net/slideshow/timeseries-machine-learning-pydata-london-2025/280261049
+
 ### Pre-Requisites:
 
 1. **Python**: Make sure you have Python version 3.x on your system.
