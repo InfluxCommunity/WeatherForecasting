@@ -121,13 +121,17 @@ influxdb3 serve \
 
 Upon running hte command, InfluxDB 3 should start on **localhost:8181** (default) and start printing logs in the terminal window without any error.
 
-3. Create a Token using the CLI
+3. Create a Token using the CLI & Save it
 
 Most `influxdb3` commands require an authentication token. Create an admin token using the following command and save it somewhere securely:
 
+Token Creation
 ```shell
 influxdb3 create token --admin
-export INFLUXDB3_AUTH_TOKEN=your-api-key-here
+```
+Token saved locally as Enviornment Variable (for Windows OS, you may have to save enviornment variable differently)
+```sh
+export INFLUXDB3_AUTH_TOKEN=YOUR_ADMIN_TOJ
 ```
 
 > [!IMPORTANT]
@@ -166,14 +170,12 @@ influxdb3 write --database my_awesome_db --file london_weather_2024_2025.lp --to
 ```shell
 influxdb3 query \
   --database my_awesome_db \
-  --token $INFLUXDB3_AUTH_TOKEN \
   "SHOW tables"
 ```
 
 ```shell
 influxdb3 query \
   --database my_awesome_db \
-  --token 'YOUR_TOKEN_STRING' \
   "SELECT * FROM london_weather_24_25 LIMIT 5"
 ```
 
@@ -188,7 +190,7 @@ InfluxDB 3 provides a virtual environment for running python processing engine p
 **Install Python Packages**
 
 ```sh
-influxdb3 install package pandas neuralprophet plotly matplotlib --token $INFLUXDB3_AUTH_TOKEN
+influxdb3 install package pandas neuralprophet plotly matplotlib
 ```
 
 #### Forecast Weather
@@ -204,14 +206,12 @@ Arguments:
 - `--trigger-spec`: Specifies how often trigger activates (e.g. Run every minute, you can use cron syntax too).
 - `--plugin-filename`: Name of the Python plugin file.
 - `--database`: Database to use.
-- '--token': YOUR_TOKEN_STRING
 - `NAME_OF_TRIGGER`
 
 ```shell
 influxdb3 create trigger \
   --trigger-spec "every:1m" \
   --plugin-filename "$(pwd)/forecast_london_weather.py" \
-  --token 'YOUR_TOKEN_STRING' \
   --database my_awesome_db \
   london_weather_forecast
 ```
@@ -229,7 +229,6 @@ Run the following command to query forecasted data written to the new table at g
 ```shell
 influxdb3 query \
   --database my_awesome_db \
-  --token 'YOUR_TOKEN_STRING' \
   "SELECT * FROM forecast_weather_24_25"
 ```
 
@@ -238,7 +237,7 @@ influxdb3 query \
 To disable the plugin trigger:
 
 ```sh
-influxdb3 disable trigger --database my_awesome_db london_weather_forecast --token 'YOUR_TOKEN_STRING'
+influxdb3 disable trigger --database my_awesome_db london_weather_forecast
 ```
 
 Last step is to stop InfluxDB3 if you'd like. If InfluxDB 3 is running in the foreground, you can usually stop it by pressing `Ctrl+C` otherwise in a new terminal window execute the following commands to find and kill the InfluxDB 3 server:
