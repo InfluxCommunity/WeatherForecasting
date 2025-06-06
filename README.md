@@ -146,23 +146,23 @@ influxdb3 show databases --token $INFLUXDB3_AUTH_TOKEN
 
 5. Collect the historical weather data
 
-  - Download as .cvs file containing one year of London weather data for the year 2024 containing temperature & precipitation values on hourly basis from [OpenMateo API](https://open-meteo.com/en/docs/historical-weather-api?hourly=temperature_2m,precipitation&start_date=2024-01-01&end_date=2024-12-31&timezone=Europe%2FLondon&latitude=51.5&longitude=0.12)
+  - Download as the cvs file containing one year of London weather data for the year 2024-2025 with temperature & precipitation data on hourly basis from [OpenMateo API](https://open-meteo.com/en/docs/historical-weather-api?hourly=temperature_2m,precipitation&start_date=2024-01-01&end_date=2024-12-31&timezone=Europe%2FLondon&latitude=51.5&longitude=0.12)
   - Clean up data and convert to LineProtocol format. [File](https://github.com/InfluxCommunity/WeatherForecasting/blob/main/london_weather_ns.lp)
     
-5. Write Weather data for 2024 for London using the CLI. We will download and convert the data to line protocol
+5. Convert CSV format to LineProtocol format and write the data in a table using the CLI.
 
-   - The original workshop uses a pre-generated data file for 2024. To run the forecast for a more recent period, we will generate our own data.
-   - The included `convert_lp.py` script will download one year of historical data for London from the [Open Mateo API](https://open-meteo.com/en/docs) (from June 2024 to June 2025) and convert it to InfluxDB [Line Protocol format](https://docs.influxdata.com/influxdb3/core/reference/line-protocol).
-   - Run the script to generate the data:
+   - Navigate to [OpenMateo API](https://open-meteo.com/en/docs/historical-weather-api?hourly=temperature_2m,precipitation&start_date=2024-01-01&end_date=2024-12-31&timezone=Europe%2FLondon&latitude=51.5&longitude=0.12) and download historical weather data that contains 1 year of dataTo run the forecast for a more recent period. Optionally use the already downloaded data from [london_weather_2024_2025.csv](https://github.com/InfluxCommunity/WeatherForecasting/blob/main/london_weather_2024_2025.csv).
+   - Download and run the included [convert_lp.py](https://github.com/InfluxCommunity/WeatherForecasting/blob/main/convert_lp.py) will download one year of historical data for London from the [Open Mateo API](https://open-meteo.com/en/docs) to convert it to InfluxDB [Line Protocol format](https://docs.influxdata.com/influxdb3/core/reference/line-protocol).
+   - Run the script to convert data
      ```shell
      python3 convert_lp.py
      ```
      This will create `london_weather_2024_2025.lp`.
 
-6. Write Weather data for 2024-2025 for London using the CLI.
+6. Write converted Line Protocal weather data for 2024-2025 for London using the CLI to InfluxDB Table.
 
 ```shell
-influxdb3 write --database my_awesome_db --file london_weather_2024_2025.lp --token 'YOUR_TOKEN_STRING'
+influxdb3 write --database my_awesome_db --file london_weather_2024_2025.lp --token $INFLUXDB3_AUTH_TOKEN
 ```
 
 7. Query Data using the CLI
