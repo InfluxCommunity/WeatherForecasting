@@ -1,6 +1,10 @@
 import pandas as pd
 from neuralprophet import NeuralProphet
+
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend - prevents GUI crashes
 import matplotlib.pyplot as plt
+plt.ioff()  # Turn off interactive mode
 
 def process_scheduled_call(influxdb3_local, call_time, args=None):
     influxdb3_local.info("Running NeuralProphet forecast on 'london_weather'")
