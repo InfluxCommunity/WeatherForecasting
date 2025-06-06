@@ -8,7 +8,8 @@ Workshop content for forecasting weather data including anomaly detection using 
 
 1. **Python**: Make sure you have Python version 3.x on your system.
 2. **Code Editor**: Your favorite code editor.
-3. **Install InfluxDB 3**: Either InfluxDB 3 Core or Enterprise.
+3. **Install [InfluxDB 3](https://www.influxdata.com/products/influxdb/)**: Either InfluxDB 3 Core or Enterprise.
+4. **[UI Explorer (optional)](https://docs.influxdata.com/influxdb3/explorer/get-started/)**: If you like to work in GUI, this tool will come handy, needs to be installed as docker container.
 
    - You can install it as a `Docker Image` or directly using `Simple Download` option.
    - When promoted **Start InfluxDB Now? Type 'n'** as we will start it later.
@@ -25,7 +26,7 @@ Workshop content for forecasting weather data including anomaly detection using 
    curl -O https://www.influxdata.com/d/install_influxdb3.sh && sh install_influxdb3.sh enterprise
    ```
 
-4. **Verify installation**: Open terminal window and run `influxdb3 --version` command without error to the latest version installed successfully.
+5. **Verify installation**: Open terminal window and run `influxdb3 --version` command without error to the latest version installed successfully.
 
 ## Processing Engine
 
