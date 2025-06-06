@@ -177,7 +177,7 @@ Arguments:
 - `--database`: Database to use.
 - '--token': YOUR_TOKEN_STRING
 - `NAME_OF_TRIGGER`
-  
+
 ```shell
 influxdb3 create trigger \
   --trigger-spec "every:1m" \
@@ -187,6 +187,11 @@ influxdb3 create trigger \
   london_weather_forecast
 ```
 Note, if you are not running influxdb3 in Docker then you must pass the full path to the Python script.
+
+Enable the trigger:
+```shell
+influxdb3 enable trigger --database my_awesome_db london_weather_forecast --token $TOKEN
+```
 
 2.3 Verify the Forecasted Data
 
