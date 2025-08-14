@@ -11,7 +11,7 @@ def process_scheduled_call(influxdb3_local, call_time, args=None):
     # Query full data from InfluxDB
     query = """
         SELECT time AS ds, temperature_c, precipitation_mm
-        FROM london_weather_24_25
+        FROM london_weather
         ORDER BY time
     """
     results = influxdb3_local.query(query)
